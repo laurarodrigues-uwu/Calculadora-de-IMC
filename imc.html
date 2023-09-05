@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <style>
+        .meter-container {
+            width: 100%;
+            height: 20px;
+            border: 1px solid #ccc;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .meter-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.5s, background-color 0.3s;
+        }
+    </style> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="imc.css">
+    <title>Calculadora corporal</title>
+</head>
+
+<body>
+
+
+
+    <div class="main">
+        <h1 class="header">⋆｡°✩₊ °✦ ‧ Calculadora ‧ ₊ ˚✧₊ °✦</h1>
+        <div class="column">
+            <h3>Suas informações</h3>
+
+            <div class="form-container">
+                <form class="form">
+                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    <label for="gender">Sexo biológico:
+                        <input type="radio" name="gender" id="genderFem" value="mulher"> Mulher
+                        <input type="radio" name="gender" id="genderMas" value="homem"> Homem
+                    </label>
+                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    <label for="age">Idade:
+                        <input type="number" name="age" id="age" min="10" max="99" class="input">
+                    </label>
+                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    <label for="height">Altura em cm:
+                        <input type="number" name="height" id="height" min="130" max="220" class="input">
+                    </label>
+                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    <label for="weight">Peso em kg:
+                        <input type="number" name="weight" id="weight" min="10" max="400" class="input">
+                    </label>
+                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    <label for="actv">Atividade física:
+                        <select name="actv" id="actv">
+                            <optgroup label="Escolha uma opção" class="input">
+                                <option value="sed">Sedentário</option>
+                                <option value="lvm">Levemente ativo</option>
+                                <option value="mod">Moderadamente ativo</option>
+                                <option value="mto">Muito ativo</option>
+                                <option value="ext">Extremamente ativo</option>
+                            </optgroup>
+                        </select>
+                    </label>
+                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    <button onclick="calcular()" class="btn">Calcular</button>
+                    <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+                    <h3>Seu IMC</h3>
+
+                    <p id="imc">Seu IMC É: </p>
+                    <p id="imcResult">UwU</p>
+                    <div class="meter-container">
+                        <div id="imcBar" class="meter-bar"></div>
+                    </div>
+
+                </form>
+            </div>
+
+            <h3>Sua Taxa Metabólica Basal</h3>
+            <p id="tmb" class="bottom">Taxa metabólica basal: </p>
+            <p id="ncd" class="bottom">Necessidade calórica diária: </p>
+
+        </div>
+    </div>
+    <script>
+
+        var imc = 0;
+        var tmb = 0;
+        var ncd = 0;
+
+        function calcular(imc, tmb, ncd, valorAtualPerdaPeso) {
+            event.preventDefault();
+
+            var gender = document.querySelector('input[name="gender"]:checked');
+            var age = parseFloat(document.querySelector('input[name="age"]').value);
+            var height = parseFloat(document.querySelector('input[name="height"]').value) / 100;
+            var weight = parseFloat(document.querySelector('input[name="weight"]').value);
+            var activityLevel = document.querySelector('#actv').value;
+
+            document.getElementById("imc").textContent = "";
+            document.getElementById("tmb").textContent = "";
+            document.getElementById("ncd").textContent = "";
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            //CALCULO IMC
+            imc = weight / (height * height);
+            var imcArredondado = parseFloat(imc.toFixed(1));
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////
+            //CALCULADOR DA TMB
+            if (gender.value === "homem") {
+                tmb = 88.362 + (13.397 * weight) + (4.799 * height * 100) - (5.677 * age);
+            } else if (gender.value === "mulher") {
+                tmb = 447.593 + (9.247 * weight) + (3.098 * height * 100) - (4.330 * age);
+            }
+
+
+            //////////////////////////////////////////////////////////////////////////////////////////////
+            //CALCULADOR DA NCD
+            if (activityLevel === "sed") {
+                ncd = tmb * 1.2;
+            } else if (activityLevel === "lvm") {
+                ncd = tmb * 1.375;
+            } else if (activityLevel === "mod") {
+                ncd = tmb * 1.55;
+            } else if (activityLevel === "mto") {
+                ncd = tmb * 1.725;
+            } else if (activityLevel === "ext") {
+                ncd = tmb * 1.9;
+            }
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            //BARRA DO IMC
+            var imcBar = document.getElementById("imcBar");
+
+            if (imcArredondado < 18.5) {
+                imcBar.style.width = (imcArredondado / 40) * 100 + "%";
+                imcBar.style.backgroundColor = "rgb(248, 210, 223)";
+                document.getElementById("imc").textContent = 'Seu IMC É: ' + imcArredondado.toFixed(1);
+                document.getElementById("imcResult").textContent = 'Está abaixo :(';
+
+            } else if (imcArredondado >= 18.5 && imcArredondado <= 25) {
+                imcBar.style.width = (imcArredondado / 40) * 100 + "%";
+                imcBar.style.backgroundColor = "rgb(255, 174, 201)";
+                document.getElementById("imc").textContent = 'Seu IMC É: ' + imcArredondado.toFixed(1);
+                document.getElementById("imcResult").textContent = 'Ideal, parabéns! :3';
+
+            } else if (imcArredondado >= 25.1) {
+                imcBar.style.width = (imcArredondado / 40) * 100 + "%";
+                imcBar.style.backgroundColor = "rgb(240, 69, 126)";
+                document.getElementById("imc").textContent = 'Seu IMC É: ' + imcArredondado.toFixed(1);
+                document.getElementById("imcResult").textContent = 'Está acima :(';
+
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////////////
+            //RESULTADOS
+
+            document.getElementById("tmb").textContent = 'Taxa metabólica basal: ' + tmb.toFixed(2) + ' calorias';
+            document.getElementById("ncd").textContent = 'Necessidade calórica diária: ' + ncd.toFixed(2) + ' calorias';;
+            // document.getElementById("perda").textContent = perda.toFixed(2);
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>
+
+<!-- 
+IMC: peso/altura²
+TMB homens: TMB=88,362+(13,397×peso em kg)+(4,799×altura em cm)−(5,677×idade em anos)
+TMB mulheres: TMB=447,593+(9,247×peso em kg)+(3,098×altura em cm)−(4,330×idade em anos) 
+
+SEXO / IDADE / ALTURA EM CM / PESO / ATIVIDADE FÍSICA      -->

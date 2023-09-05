@@ -1,0 +1,111 @@
+body {
+    height: 100vh;
+    background-color: rgb(255, 174, 201);
+    margin: 0;
+}
+
+.header {
+    color: white;
+    /* text-align: center; */
+    font-family: 'PT Serif', serif;
+    /* display: inline-block; */
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.column {
+    background-color: white;
+    position: relative; /* Adicione esta propriedade para criar um contexto de posicionamento relativo para o .meter-container */
+}
+
+h3 {
+    color: rgb(245, 90, 141);
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+}
+
+.form,
+label {
+    display: block;
+    margin-bottom: 10px;
+    padding: 0px 20px;
+}
+
+label {
+    display: flex;
+}
+
+input {
+    margin-left: 20px;
+}
+
+.input {
+    flex: 1;
+}
+
+.meter-container {
+    width: 100%;
+    height: 20px;
+    border: 1px solid #ccc;
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.meter-bar {
+    height: 100%;
+    width: 0;
+    transition: width 0.5s, background-color 0.3s;
+}
+
+.column {
+    position: relative; /* Adicione esta propriedade para criar um contexto de posicionamento relativo para o .meter-container */
+}
+
+/* Ajuste de margem para os elementos abaixo da .meter-container */
+.bottom {
+    margin-top: 20px; /* Adicione uma margem acima dos elementos abaixo da .meter-container */
+}
+
+
+.btn {
+    background-color: rgb(255, 174, 201);
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-left: auto;
+}
+
+.button-1:hover,
+.button-1:focus {
+    background-color: #F082AC;
+}
+
+.bottom {
+    padding: 0px 20px;
+}
